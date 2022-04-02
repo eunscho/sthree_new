@@ -1,9 +1,10 @@
 analyze <- function(conditions, condition_number, rep_set, rep, data) {
   library(mokken)
   library(poLCA)
-  n <- as.integer(conditions[condition_number, 1])
-  k <- as.integer(conditions[condition_number, 2])
-  numcat <- as.integer(conditions[condition_number, 3])
+  dd <- as.integer(conditions[condition_number, 1])
+  n <- as.integer(conditions[condition_number, 2])
+  k <- as.integer(conditions[condition_number, 3])
+  numcat <- as.integer(conditions[condition_number, 4])
   m <- var(data)
   r <- cov2cor(m)
   
@@ -55,7 +56,7 @@ analyze <- function(conditions, condition_number, rep_set, rep, data) {
   # LCRC & MS
   safenclass <- purrr::safely(LCRC_nclass)
   nclass <- safenclass(data)$result
-  if(is.null(safenclass)) {
+  if(is.null(nclass)) {
     MS <- AIC <- AIC3 <- BIC <- NA
   } else {
     mokken_AIC <- mokken::check.reliability(data, LCRC = TRUE, nclass = nclass$AIC)
@@ -69,6 +70,7 @@ analyze <- function(conditions, condition_number, rep_set, rep, data) {
   
   
   out <- tibble::tibble(condition_number = condition_number,
+                        dd = dd,
                         n = n,
                         k = k,
                         numcat = numcat,

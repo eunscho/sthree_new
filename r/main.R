@@ -7,9 +7,9 @@ main <- function(start = 1, end = 60, true_rel = F) {
   library(tictoc)
   library(misty)
   # specify simulation conditions
+  dd <- c(0, 1) # difference in discrimination, 0: no difference, 1: difference
   n <- c(50, 100, 250, 500, 1000)
   k <- c(3, 6, 9)
-  dd <- c(0, 1) # difference in discrimination, 0: no difference, 1: difference
   numcat <- c(2, 5)
   if (true_rel) {
     N_SET <- 100
